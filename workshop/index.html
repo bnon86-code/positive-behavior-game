@@ -18,7 +18,8 @@
   --font:'Tajawal', Tahoma, 'Segoe UI', sans-serif;
   color-scheme:dark;
 }
-html,body{height:100%}
+html,body{height:100%;margin:0}
+[hidden]{display:none!important}
 body{background:var(--ink);color:var(--foam);font-family:var(--font);overflow:hidden}
 *{box-sizing:border-box}
 button,input,select{font-family:inherit}
@@ -44,7 +45,7 @@ button{cursor:pointer}
 
 /* stage */
 .stage{position:relative;overflow:hidden}
-.screen{position:absolute;inset:0;padding:clamp(16px,3.2vw,48px);overflow-y:auto;display:flex;flex-direction:column;gap:clamp(14px,2vw,24px);opacity:0;visibility:hidden;transform:translateX(-40px);transition:opacity .45s ease,transform .45s ease,visibility 0s .45s}
+.screen{position:absolute;inset:0;padding:clamp(16px,3.2vw,48px);padding-bottom:88px;overflow-y:auto;display:flex;flex-direction:column;gap:clamp(14px,2vw,24px);opacity:0;visibility:hidden;transform:translateX(-40px);transition:opacity .45s ease,transform .45s ease,visibility 0s .45s}
 .screen.on{opacity:1;visibility:visible;transform:none;transition:opacity .45s ease,transform .45s ease}
 .screen.back{transform:translateX(40px)}
 .eyebrow{font-weight:800;color:var(--aqua);font-size:clamp(14px,1.4vw,18px);letter-spacing:.02em;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
