@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>صفٌّ يتحدث عن نفسه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap">
+<style>
+/* Layout: one zoomable world — a 60-minute clock face; the workshop title sits in the dial, the eight stations sit at their minutes on the rim, and the camera flies between them */
+:root{
+  --ink:#061C1E; --stage:#0A2A2D; --panel:#103B3D; --line:#1E5557;
+  --teal:#19B3AE; --aqua:#7FE3DA; --foam:#E8F7F5; --mist:#A9CFCB;
+  --coral:#FF9466; --sun:#FFD36E;
+  --g1:#2EC4B6; --g2:#6AB7F0; --g3:#FF9466; --g4:#FFD36E; --g5:#C3A6F5;
+  --font:'Tajawal', Tahoma, 'Segoe UI', sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(circle at 50% 40%,#0B3134 0,var(--ink) 70%);color:var(--foam);font-family:var(--font);overflow:hidden;user-select:none}
+*{box-sizing:border-box}
+#view{position:fixed;inset:0;overflow:hidden;cursor:pointer}
+#world{position:absolute;left:0;top:0;transform-origin:0 0}
+.f{position:absolute;transform-origin:50% 50%;direction:rtl}
+.f h1,.f h2,.f h3,.f p{margin:0}
+.box{background:var(--panel);border:4px solid var(--line);border-radius:48px;padding:70px 80px;display:flex;flex-direction:column;gap:36px;overflow:hidden}
+.box.fun{background:#0E6F71;border-color:var(--aqua)}
+.wm{position:absolute;left:50px;bottom:-60px;font-size:420px;font-weight:900;color:rgba(127,227,218,.07);line-height:1;pointer-events:none}
+.eb{font-size:38px;font-weight:800;color:var(--aqua)}
+.box h2{font-size:96px;font-weight:900;line-height:1.12;text-wrap:balance}
+.tx{font-size:42px;line-height:1.55;color:var(--mist)}
+.row{display:flex;gap:28px}
+.tile{flex:1;background:var(--stage);border-radius:32px;padding:36px;display:flex;flex-direction:column;gap:14px}
+.tile b{font-size:72px;font-weight:900;color:var(--aqua);line-height:1}
+.tile span{font-size:34px;font-weight:800}
+.tile small{font-size:26px;color:var(--mist)}
+.q{background:var(--aqua);color:var(--ink);border-radius:32px;padding:30px 44px;font-size:48px;font-weight:900;line-height:1.35}
+.rv{opacity:0;transform:translateY(30px) scale(.96);transition:opacity .6s ease,transform .6s cubic-bezier(.3,1.4,.5,1)}
+.rv.on{opacity:1;transform:none}
+
+/* dial */
+.cover{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:40px}
+.cover .eb{font-size:52px}
+.cover h1{font-size:250px;font-weight:900;line-height:1.05;background:linear-gradient(180deg,#FFFFFF,#9FEDE5);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover .sub{font-size:84px;font-weight:700;color:var(--aqua)}
+.cover .who{font-size:44px;color:var(--mist)}
+.outs{counter-reset:o;display:flex;flex-direction:column;gap:18px;padding:0;margin:0;list-style:none}
+.outs li{counter-increment:o;display:flex;gap:26px;align-items:center;font-size:40px;font-weight:600;background:var(--stage);border-radius:26px;padding:20px 30px}
+.outs li::before{content:counter(o);flex:none;width:68px;height:68px;border-radius:50%;background:var(--teal);color:var(--ink);font-weight:900;display:grid;place-items:center;font-size:38px}
+.thanks{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px}
+.thanks h2{font-size:150px;font-weight:900;color:var(--aqua)}
+.thanks p{font-size:40px;color:var(--mist)}
+
+/* groups */
+.gcol{flex:1;border-radius:28px;background:var(--stage);border-top:12px solid var(--gc);padding:26px;display:flex;flex-direction:column;gap:10px}
+.gcol .gn{color:var(--gc);font-weight:900;font-size:30px}
+.gcol h3{font-size:34px;font-weight:800;line-height:1.2}
+.gcol .dm{align-self:flex-start;background:var(--gc);color:var(--ink);border-radius:99px;padding:4px 18px;font-weight:800;font-size:24px}
+.gcol ul{list-style:none;margin:0;padding:0;font-size:26px;line-height:1.6;color:var(--mist)}
+
+/* case + myth cards (own frames) */
+.card{border-radius:28px;padding:22px 24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 20px 40px rgba(0,0,0,.35)}
+.case{background:var(--foam);color:var(--ink);border-top:22px solid var(--gc)}
+.case .gn{font-weight:900;font-size:22px;color:#335}
+.case h3{font-size:34px;font-weight:900;line-height:1.15}
+.case .sit{font-size:15px;font-weight:700;line-height:1.55;background:#D8EFEC;border-radius:12px;padding:10px 12px}
+.case ol{margin:0;padding-inline-start:20px;font-size:12.5px;line-height:1.6;font-weight:500}
+.myth{background:var(--foam);color:var(--ink);justify-content:center;align-items:center;text-align:center;gap:8px}
+.myth .n{position:absolute;top:12px;right:18px;font-weight:900;font-size:16px;color:#4A6563}
+.myth p.s{font-size:23px;font-weight:900;line-height:1.35}
+.myth .vd{position:absolute;inset:auto 14px 14px 14px;border-radius:16px;padding:10px 14px;display:flex;gap:12px;align-items:center;text-align:right}
+.myth .vd b{font-size:24px;font-weight:900}
+.myth .vd span{font-size:11.5px;font-weight:700;line-height:1.45}
+.vd.t{background:var(--aqua)} .vd.f{background:var(--coral)}
+.myth .hint{font-size:12px;color:#4A6563;font-weight:700}
+
+/* hud */
+.hud{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;gap:8px;align-items:center;background:rgba(10,42,45,.88);border:1px solid var(--line);border-radius:999px;padding:6px;direction:rtl;z-index:5;transition:opacity .4s}
+.hud.idle{opacity:.15}
+.hud button,.hud a{border:0;background:transparent;color:var(--foam);font:800 15px var(--font);padding:9px 14px;border-radius:999px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.hud button:hover,.hud a:hover{background:var(--panel)}
+.hud .cnt{font-variant-numeric:tabular-nums;color:var(--mist);font-size:14px;min-width:54px;text-align:center}
+.prog{position:fixed;top:0;right:0;height:4px;background:var(--aqua);transition:width .6s;z-index:5}
+:focus-visible{outline:3px solid var(--aqua);outline-offset:2px}
+@media (max-width:520px){.hud .opt{display:none}}
+@media (prefers-reduced-motion:reduce){.rv{transition:none}}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+<div id="view"><div id="world"></div></div>
+<nav class="hud" id="hud">
+  <button id="prev" aria-label="السابق">› السابق</button>
+  <span class="cnt" id="cnt">1 / 1</span>
+  <button id="next" aria-label="التالي">التالي ‹</button>
+  <button id="ovr" class="opt">الخريطة</button>
+  <a href="./" class="opt">الأدوات التفاعلية</a>
+  <button id="fs" class="opt" aria-label="ملء الشاشة">⤢</button>
+</nav>
+<script>
+const W=document.getElementById('world'), V=document.getElementById('view');
+const R=3400, D2R=Math.PI/180;
+const G=[
+ {n:'المجموعة 1',s:'الاجتماعيات والإنجليزي',d:'بيئة التعلم',c:'var(--g1)',names:['حنان العساف','مها الزعبي','حصة المسلم','وفاء الشيحان','عزيزة العنزي','رحاب الغامدي'],sit:'أخطأت طالبة في الإجابة فضحكت زميلاتها، وأكملت المعلمة الشرح دون تعليق.',q:['أي المؤشرات تأثر؟ ولماذا تعدّه الزائرة مؤثرًا رغم قصره؟','كيف تحوّل المعلمة الموقف إلى مكسب في 30 ثانية؟','كيف نشرك الطالبة المنعزلة دون أن نحرجها؟']},
+ {n:'المجموعة 2',s:'الحاسب والفنية',d:'التدريس والتعلم',c:'var(--g2)',names:['مها العتيبي','عزيزة القحطاني','إيمان بخاري','إيمان الحسينان'],sit:'عرض وفيديو وورقة عمل ومنصة مدرستي في حصة واحدة، ونصف الطالبات لم يحققن الناتج.',q:['هل تنوع المصادر وحده يكفي؟ ما الفرق بين استخدام المصدر وتوظيفه؟','كيف نكيّف المصدر الرقمي لثلاثة مستويات؟','مثال من موادكن يربط الدرس بحياة الطالبة.']},
+ {n:'المجموعة 3',s:'لغتي',d:'تنمية المهارات',c:'var(--g3)',names:['فاطمة الشهراني','أفراح الريزان','لطيفة القحطاني','خيرية القحطاني'],sit:'حصة مكتملة الأنشطة، لم تكتب فيها الطالبات جملة، ولم يرد فيها رقم واحد.',q:['كيف ندمج القراءة والكتابة والحساب في أي مادة دون تكلف؟','صغن ثلاثة أسئلة تبدأ بـ«لماذا» أو «كيف».','ما الفرق بين حماس حقيقي وحماس مصطنع ليوم الزيارة؟']},
+ {n:'المجموعة 4',s:'الرياضيات والعلوم',d:'التقويم',c:'var(--g4)',names:['عبير الجوهي','زينة الشهري','سحر الغامدي','أريج الحفظي','خلود الشامسي','سارة العتيبي','فوزية المطيري'],sit:'سؤال في الختام أجابت عنه ثلاث متفوقات، فقالت المعلمة «ممتاز» وأنهت الحصة.',q:['ما المؤشرات التي فاتت المعلمة في هذا الختام؟','كيف تعرف المعلمة مستوى كل طالبة في 3 دقائق؟','صمّمن بطاقة خروج بمستويين، وعبارة تغذية راجعة توضح سبب الخطأ.']},
+ {n:'المجموعة 5',s:'الإسلاميات',d:'سلوك الطالبات',c:'var(--g5)',names:['جوهرة الحارثي','آسيا الخليفة','لبنى الزواوي','سعاد البراهيم'],sit:'صف هادئ تمامًا، لكن الطالبات لا يشاركن إلا إذا نودين بالاسم.',q:['هل هذا الهدوء انضباط؟ ماذا ستكتب الزائرة عنه؟','كيف تظهر استقلالية الطالبة وتقييمها الذاتي داخل الحصة؟','ما الممارسة اليومية التي تبني هذا السلوك قبل الزيارة بأسابيع؟']}
+];
+const MYTHS=[
+ ['الحصة المميزة تعرض أكبر عدد من الاستراتيجيات',0,'المعيار 7 يقيس وضوح ارتباط الأنشطة بنواتج التعلم، لا كثرتها.'],
+ ['عرض الفيديو على الشاشة يكفي لاحتساب التقنية',0,'المعيار 6: توظيف المصادر لخدمة هدف الدرس، لا للعرض فقط.'],
+ ['منح الطالبة البطيئة وقتًا إضافيًا مؤشر يُرصد',1,'المعيار 4: وقت إضافي لمن تحتاج دون الإخلال بزمن الحصة.'],
+ ['قول «صح» أو «خطأ» تغذية راجعة كافية',0,'المعيار 19: توضيح سبب الخطأ وطريقة تصحيحه.'],
+ ['سلامة لغة الطالبات العربية تُرصد طوال الحصة',1,'المعيار 20: لغة عربية سليمة طوال الحصة، في كل المواد.'],
+ ['الصف الهادئ صف منضبط دائمًا',0,'المعيار 2: التعبير عن الرأي دون خوف من الخطأ.']
+];
+const STOPS=[[0,5],[5,12],[12,17],[17,32],[32,36],[36,48],[48,55],[55,60]];
+
+/* ---------- world geometry ---------- */
+const F={};
+function onClock(min){const a=(min/60*360-90)*D2R;return [R*Math.cos(a),R*Math.sin(a)]}
+function frame(id,x,y,w,h,r,cls,html){F[id]={id,x,y,w,h,r};const d=document.createElement('div');d.className='f '+(cls||'');d.id='f-'+id;
+  Object.assign(d.style,{left:(x-w/2)+'px',top:(y-h/2)+'px',width:w+'px',height:h+'px',transform:`rotate(${r}deg)`});d.innerHTML=html;W.appendChild(d);return F[id]}
+function child(p,id,lx,ly,w,h,r,cls,html){const a=p.r*D2R;return frame(id,p.x+lx*Math.cos(a)-ly*Math.sin(a),p.y+lx*Math.sin(a)+ly*Math.cos(a),w,h,p.r+r,cls,html)}
+function station(id,min,r,n,eb,inner,fun){const [x,y]=onClock(min);return frame(id,x,y,1600,900,r,'box'+(fun?' fun':''),`<span class="wm">${n}</span><div class="eb">${eb}</div>${inner}`)}
+
+/* dial: clock face svg */
+(function(){
+  const S=9800,c=S/2;let s=`<svg width="${S}" height="${S}" viewBox="0 0 ${S} ${S}" aria-hidden="true">`;
+  s+=`<circle cx="${c}" cy="${c}" r="2150" fill="#0C3437" stroke="#1E5557" stroke-width="10"/>`;
+  s+=`<circle cx="${c}" cy="${c}" r="${R}" fill="none" stroke="#1E5557" stroke-width="14" stroke-dasharray="40 40"/>`;
+  const arc=(a0,a1,r)=>{const p=m=>{const a=(m/60*360-90)*D2R;return [c+r*Math.cos(a),c+r*Math.sin(a)]};const [x0,y0]=p(a0),[x1,y1]=p(a1);return `M${x0} ${y0} A${r} ${r} 0 ${a1-a0>30?1:0} 1 ${x1} ${y1}`};
+  const fun=[0,4];
+  STOPS.forEach((st,i)=>{s+=`<path d="${arc(st[0]+.25,st[1]-.25,4560)}" fill="none" stroke="${fun.includes(i)?'#7FE3DA':(i%2?'#19B3AE':'#13807D')}" stroke-width="150" stroke-linecap="butt"/>`});
+  for(let m=0;m<60;m++){const a=(m/60*360-90)*D2R,r0=m%5?4700:4680,r1=m%5?4760:4840;s+=`<line x1="${c+r0*Math.cos(a)}" y1="${c+r0*Math.sin(a)}" x2="${c+r1*Math.cos(a)}" y2="${c+r1*Math.sin(a)}" stroke="#A9CFCB" stroke-width="${m%5?6:14}"/>`}
+  s+='</svg>';
+  const d=document.createElement('div');d.className='f';Object.assign(d.style,{left:-c+'px',top:-c+'px',width:S+'px',height:S+'px'});d.innerHTML=s;W.appendChild(d);
+  [[0,'0'],[15,'15'],[30,'30'],[45,'45']].forEach(([m,t])=>{const a=(m/60*360-90)*D2R;const r=5000;frame('lbl'+m,r*Math.cos(a),r*Math.sin(a),300,140,0,'',`<div style="font-size:110px;font-weight:900;color:#A9CFCB;text-align:center">${t}</div>`)});
+})();
+
+frame('cover',0,-430,2600,1300,0,'cover',`<div class="eb">المتوسطة الأولى والثانية بالخبر · 1448هـ</div><h1>صفٌّ يتحدث عن نفسه</h1><div class="sub">البيئة الصفية بعين الزائرة</div><div class="who">ورشة نقاشية · 60 دقيقة · بنان مريح عسيري، وكيلة الشؤون التعليمية</div>`);
+frame('outs',0,760,1700,940,0,'box',`<div class="eb">نواتج الورشة</div><ol class="outs"><li>تحديد ما تبحث عنه الزائرة في المجالات الخمسة.</li><li>التمييز بين الممارسة المتقنة والاستعراض المتكلف.</li><li>تحويل المعايير إلى ممارسات يومية قابلة للملاحظة.</li><li>صياغة «ميثاق الصف المثالي» مع الزميلات.</li><li>الالتزام بثلاث ممارسات خلال الأسبوع القادم.</li></ol>`);
+frame('thanks',0,1610,1300,330,0,'thanks',`<h2>شكرًا لكنّ</h2><p>ميثاقنا يُعلَّق في فصولنا الخمسة عشر هذا الأسبوع.</p>`);
+
+station('s1',2.5,-4,'1','المحطة 1 · 0–5 د · حلقة تنشيطية',`<h2>صفّي في كلمة</h2><p class="tx">كل معلمة تكتب كلمة واحدة تصف صفها اليوم على ورقة لاصقة، وتلصقها على اللوح.</p><div class="q">لو دخلت الزائرة صفكِ الآن، هل ستكتب الكلمة نفسها؟</div>`,1);
+station('s2',8.5,3,'2','المحطة 2 · 5–12 د · فكّري، زاوجي، شاركي',`<h2>ماذا ترى الزائرة في أول 3 دقائق؟</h2>
+ <div class="row"><div class="tile"><b>1 د</b><span>فكّري</span><small>دوّني وحدكِ ما ستلاحظه</small></div><div class="tile"><b>3 د</b><span>زاوجي</span><small>اتفقا على أهم 3 علامات</small></div><div class="tile"><b>3 د</b><span>شاركي</span><small>4–5 أزواج تعرض علاماتها</small></div></div>
+ <div class="row rv" data-rv="eye" style="flex-wrap:wrap;gap:14px">${['السبورة: هدف واضح · م7','الشاشة: تتفاعل معها الطالبات · م6، م9','النافذة: تهوية وإضاءة ونظافة · م22','الجدار: قيم وهوية وطنية · م1','المجموعات: مهمة لكل طالبة · م14','الطالبة في الركن: هل أُشركت؟ · م5','مكتب المعلمة: بطاقات خروج بمستويين · م17'].map(t=>`<span style="background:var(--sun);color:var(--ink);border-radius:99px;padding:8px 20px;font-size:27px;font-weight:800">${t}</span>`).join('')}</div>`);
+station('s3',14.5,-3,'3','المحطة 3 · 12–17 د · بطاقة الملاحظة 1448هـ',`<h2>ماذا تقيس البطاقة فعلًا؟</h2>
+ <div class="row">${[['20','بيئة التعلم','1–5'],['20','التدريس والتعلم','6–10'],['24','تنمية المهارات','11–16'],['12','التقويم','17–19'],['24','سلوك الطالبات','20–25']].map(d=>`<div class="tile"><b>${d[0]}</b><span>${d[1]}</span><small>المعايير ${d[2]}</small></div>`).join('')}</div>
+ <div class="q rv" data-rv="claim">48 درجة من 100 تُقرأ من مهارات الطالبات وسلوكهن، لا من أداء المعلمة أمام الصف.</div>`);
+frame('grp',...onClock(20.5),1700,960,4,'box',`<div class="eb">التوزيع حسب التخصص · 25 معلمة · مسابقة نقاط طوال الورشة</div><div class="row" style="flex:1">${G.map(g=>`<div class="gcol" style="--gc:${g.c}"><span class="gn">${g.n} · ${g.names.length}</span><h3>${g.s}</h3><span class="dm">${g.d}</span><ul>${g.names.map(n=>`<li>${n}</li>`).join('')}</ul></div>`).join('')}</div>`);
+const s4=station('s4',27,-4,'4','المحطة 4 · 17–32 د · مجموعات تعاونية',`<h2>موقف صفي لكل مجموعة</h2><div style="flex:1"></div><p class="tx" style="font-size:30px">الأدوار: ميسّرة · كاتبة · ضابطة وقت · متحدثة · مقيّمة &nbsp;|&nbsp; ورقة A3: 3 ممارسات · خطأ شائع · شاهد</p>`);
+G.forEach((g,i)=>child(s4,'c'+i,(2-i)*290,40,260,400,[-3,2,-1,3,-2][i],'card case',`<span class="gn">${g.n}</span><h3>${g.d}</h3><p class="sit">${g.sit}</p><ol>${g.q.map(x=>`<li>${x}</li>`).join('')}</ol>`).el=1);
+const s5=station('s5',34,3,'5','المحطة 5 · 32–36 د · حلقة تنشيطية بالحركة',`<h2>حقيقة أم خرافة؟</h2><p class="tx" style="font-size:32px">حقيقة؟ قفي. خرافة؟ ابقي جالسة.</p>`,1);
+MYTHS.forEach((m,i)=>child(s5,'m'+i,(i%3-1)*-470,(Math.floor(i/3))*270+40,440,248,[-2,1,-1,2,-1,1][i],'card myth',`<span class="n">${i+1} / 6</span><p class="s">«${m[0]}»</p><span class="hint">حقيقة أم خرافة؟</span><div class="vd ${m[1]?'t':'f'} rv" data-rv="v${i}"><b>${m[1]?'حقيقة':'خرافة'}</b><span>${m[2]}</span></div>`));
+station('s6',42,-3,'6','المحطة 6 · 36–48 د · عرض ونقاش',`<h2>المقعد الساخن</h2>
+ <div class="row"><div class="tile"><b>1:30</b><span>المتحدثة تعرض</span><small>ممارسات المجموعة الثلاث</small></div><div class="tile"><b>سؤال</b><span>المقيّمة تسأل</span><small>من مجموعة أخرى</small></div><div class="tile"><b>0:30</b><span>المجموعة تجيب</span><small>بمثال من حصصها</small></div></div>
+ <div class="q">«أين أرى هذا في الحصة، ومتى؟»</div>`);
+station('s7',51.5,4,'7','المحطة 7 · 48–55 د · تصويت جماعي',`<h2>ميثاق الصف المثالي</h2><p class="tx">ممارستان من كل مجموعة، والتصويت برفع الأيدي.</p>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 50px">${Array.from({length:10},(_,i)=>`<div style="display:flex;gap:18px;font-size:32px;font-weight:800;border-bottom:3px dashed #3B7774;padding-bottom:8px"><span style="color:var(--sun)">${i+1}</span><span style="color:var(--mist)">في صفنا ...</span></div>`).join('')}</div>`);
+station('s8',57.5,-3,'8','المحطة 8 · 55–60 د · كتابة فردية',`<h2>بطاقة الخروج 3–2–1</h2>
+ <div class="row" style="flex:1">${[['3','ممارسات سأطبقها في صفي هذا الأسبوع'],['2','مؤشران أحتاج فيهما دعمًا أو زيارة تبادلية'],['1','سؤال ما زال يشغلني عن الزيارة الخارجية']].map(t=>`<div class="tile"><b style="font-size:150px">${t[0]}</b><span style="font-size:40px">${t[1]}</span></div>`).join('')}</div>`);
+
+/* ---------- steps ---------- */
+const STEPS=[{f:'all'},{f:'cover'},{f:'outs'},{f:'all'},{f:'s1'},{f:'s2'},{f:'s2',rv:'eye'},{f:'s3'},{f:'s3',rv:'claim'},{f:'grp'},{f:'s4'}];
+G.forEach((_,i)=>STEPS.push({f:'c'+i}));
+STEPS.push({f:'s5'});MYTHS.forEach((_,i)=>{STEPS.push({f:'m'+i});STEPS.push({f:'m'+i,rv:'v'+i})});
+STEPS.push({f:'s6'},{f:'s7'},{f:'s8'},{f:'thanks'},{f:'all'});
+F.all={x:0,y:0,w:10400,h:10400,r:0};
+
+/* ---------- camera ---------- */
+let cam={x:0,y:0,z:-4,r:0},cur=0,anim=null;
+function target(fr){const vw=innerWidth,vh=innerHeight;const s=Math.min(vw/fr.w,vh/fr.h)*(fr.w>5000?1:.92);return {x:fr.x,y:fr.y,z:Math.log2(s),r:fr.r}}
+function apply(){const s=Math.pow(2,cam.z);W.style.transform=`translate(${innerWidth/2}px,${innerHeight/2}px) scale(${s}) rotate(${-cam.r}deg) translate(${-cam.x}px,${-cam.y}px)`}
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function fly(to,dur){
+  cancelAnimationFrame(anim);const from={...cam};
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)dur=0;
+  const dist=Math.hypot(to.x-from.x,to.y-from.y);const zMid=Math.log2(Math.min(innerWidth,innerHeight)/(dist+1800));
+  const bump=Math.max(0,(from.z+to.z)/2-zMid);const t0=performance.now();
+  (function step(t){const p=dur?Math.min(1,(t-t0)/dur):1,e=ease(p);
+    cam.x=from.x+(to.x-from.x)*e;cam.y=from.y+(to.y-from.y)*e;cam.r=from.r+(to.r-from.r)*e;
+    cam.z=from.z+(to.z-from.z)*e-bump*Math.sin(Math.PI*e);apply();if(p<1)anim=requestAnimationFrame(step)})(t0);
+}
+function go(i,instant){
+  cur=Math.max(0,Math.min(STEPS.length-1,i));const st=STEPS[cur];
+  const on=new Set(STEPS.slice(0,cur+1).map(s=>s.rv).filter(Boolean));
+  document.querySelectorAll('.rv').forEach(e=>e.classList.toggle('on',on.has(e.dataset.rv)));
+  const prevF=go.last;go.last=st.f;
+  if(prevF!==st.f||instant)fly(target(F[st.f]),instant?0:1500);
+  document.getElementById('cnt').textContent=(cur+1)+' / '+STEPS.length;
+  document.getElementById('prog').style.width=(cur/(STEPS.length-1)*100)+'%';
+  try{history.replaceState(null,'','#'+cur)}catch(e){}
+}
+document.getElementById('next').onclick=e=>{e.stopPropagation();go(cur+1)};
+document.getElementById('prev').onclick=e=>{e.stopPropagation();go(cur-1)};
+document.getElementById('ovr').onclick=e=>{e.stopPropagation();go.last=null;fly(target(F.all),1500);go.last='all'};
+document.getElementById('fs').onclick=e=>{e.stopPropagation();try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})}catch(x){}};
+V.addEventListener('click',e=>{
+  if(go.last==='all'){const fe=e.target.closest('.f[id^="f-"]');if(fe){const id=fe.id.slice(2);const k=STEPS.findIndex(s=>s.f===id);if(k>=0){go(k);return}}}
+  go(cur+1)});
+document.addEventListener('keydown',e=>{
+  if(['ArrowLeft','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();go(cur+1)}
+  else if(['ArrowRight','PageUp','Backspace'].includes(e.key)){e.preventDefault();go(cur-1)}
+  else if(e.key==='Home')go(0);else if(e.key==='End')go(STEPS.length-1);
+  else if(e.key==='o'||e.key==='O'||e.key==='Escape')document.getElementById('ovr').click()});
+let tx=null;V.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+V.addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50){e.preventDefault();go(cur+(dx>0?1:-1))}tx=null});
+addEventListener('resize',()=>{cam={...cam,...target(F[go.last||'all'])};apply()});
+let idle;const hud=document.getElementById('hud');addEventListener('mousemove',()=>{hud.classList.remove('idle');clearTimeout(idle);idle=setTimeout(()=>hud.classList.add('idle'),2500)});
+const start=parseInt((location.hash||'#0').slice(1))||0;
+cam=target(F.all);apply();go.last='all';setTimeout(()=>go(start),start?0:400);
+</script>
+</body>
+</html>
