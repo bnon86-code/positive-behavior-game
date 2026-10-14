@@ -12,7 +12,7 @@
   --ink:#061C1E; --stage:#0A2A2D; --panel:#103B3D; --line:#1E5557;
   --teal:#19B3AE; --aqua:#7FE3DA; --foam:#E8F7F5; --mist:#A9CFCB;
   --coral:#FF9466; --sun:#FFD36E;
-  --g1:#2EC4B6; --g2:#6AB7F0; --g3:#FF9466; --g4:#FFD36E; --g5:#C3A6F5;
+  --g1:#2EC4B6; --g2:#6AB7F0; --g3:#FF9466; --g4:#FFD36E; --g5:#C3A6F5; --g6:#F5A3C7;
   --font:'Tajawal', Tahoma, 'Segoe UI', sans-serif;
   color-scheme:dark;
 }
@@ -55,14 +55,14 @@ body{background:radial-gradient(circle at 50% 40%,#0B3134 0,var(--ink) 70%);colo
 .gcol{flex:1;border-radius:28px;background:var(--stage);border-top:12px solid var(--gc);padding:26px;display:flex;flex-direction:column;gap:10px}
 .gcol .gn{color:var(--gc);font-weight:900;font-size:30px}
 .gcol h3{font-size:34px;font-weight:800;line-height:1.2}
-.gcol .dm{align-self:flex-start;background:var(--gc);color:var(--ink);border-radius:99px;padding:4px 18px;font-weight:800;font-size:24px}
+.gcol .dm{align-self:flex-start;background:var(--gc);color:var(--ink);border-radius:99px;padding:4px 14px;font-weight:800;font-size:21px;white-space:nowrap}
 .gcol ul{list-style:none;margin:0;padding:0;font-size:26px;line-height:1.6;color:var(--mist)}
 
 /* case + myth cards (own frames) */
 .card{border-radius:28px;padding:22px 24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 20px 40px rgba(0,0,0,.35)}
 .case{background:var(--foam);color:var(--ink);border-top:22px solid var(--gc)}
 .case .gn{font-weight:900;font-size:22px;color:#335}
-.case h3{font-size:34px;font-weight:900;line-height:1.15}
+.case h3{font-size:28px;font-weight:900;line-height:1.15}
 .case .sit{font-size:15px;font-weight:700;line-height:1.55;background:#D8EFEC;border-radius:12px;padding:10px 12px}
 .case ol{margin:0;padding-inline-start:20px;font-size:12.5px;line-height:1.6;font-weight:500}
 .myth{background:var(--foam);color:var(--ink);justify-content:center;align-items:center;text-align:center;gap:8px}
@@ -103,9 +103,10 @@ const R=3400, D2R=Math.PI/180;
 const G=[
  {n:'المجموعة 1',d:'بيئة التعلم',rg:'1–5',c:'var(--g1)',sit:'أخطأت طالبة في الإجابة فضحكت زميلاتها، وأكملت المعلمة الشرح دون تعليق.',q:['أي المؤشرات تأثر؟ ولماذا تعدّه الزائرة مؤثرًا رغم قصره؟','كيف تحوّل المعلمة الموقف إلى مكسب في 30 ثانية؟','كيف نشرك الطالبة المنعزلة دون أن نحرجها؟']},
  {n:'المجموعة 2',d:'التدريس والتعلم',rg:'6–10',c:'var(--g2)',sit:'عرض وفيديو وورقة عمل ومنصة مدرستي في حصة واحدة، ونصف الطالبات لم يحققن الناتج.',q:['هل تنوع المصادر وحده يكفي؟ ما الفرق بين استخدام المصدر وتوظيفه؟','كيف نكيّف المصدر الرقمي لثلاثة مستويات؟','مثال من موادكن يربط الدرس بحياة الطالبة.']},
- {n:'المجموعة 3',d:'تنمية المهارات',rg:'11–16',c:'var(--g3)',sit:'حصة مكتملة الأنشطة، لم تكتب فيها الطالبات جملة، ولم يرد فيها رقم واحد.',q:['كيف ندمج القراءة والكتابة والحساب في أي مادة دون تكلف؟','صغن ثلاثة أسئلة تبدأ بـ«لماذا» أو «كيف».','ما الفرق بين حماس حقيقي وحماس مصطنع ليوم الزيارة؟']},
- {n:'المجموعة 4',d:'التقويم',rg:'17–19',c:'var(--g4)',sit:'سؤال في الختام أجابت عنه ثلاث متفوقات، فقالت المعلمة «ممتاز» وأنهت الحصة.',q:['ما المؤشرات التي فاتت المعلمة في هذا الختام؟','كيف تعرف المعلمة مستوى كل طالبة في 3 دقائق؟','صمّمن بطاقة خروج بمستويين، وعبارة تغذية راجعة توضح سبب الخطأ.']},
- {n:'المجموعة 5',d:'سلوك الطالبات',rg:'20–25',c:'var(--g5)',sit:'صف هادئ تمامًا، لكن الطالبات لا يشاركن إلا إذا نودين بالاسم.',q:['هل هذا الهدوء انضباط؟ ماذا ستكتب الزائرة عنه؟','كيف تظهر استقلالية الطالبة وتقييمها الذاتي داخل الحصة؟','ما الممارسة اليومية التي تبني هذا السلوك قبل الزيارة بأسابيع؟']}
+ {n:'المجموعة 3',d:'المهارات الأساسية والتفكير',rg:'11–13',c:'var(--g3)',sit:'حصة مكتملة الأنشطة، لم تكتب فيها الطالبات جملة، ولم يرد فيها رقم واحد.',q:['كيف ندمج القراءة والكتابة والحساب في أي مادة دون تكلف؟','صغن ثلاثة أسئلة تبدأ بـ«لماذا» أو «كيف».','كيف نوجّه الطالبة لاستخراج المعلومة بنفسها بدل تلقيها؟']},
+ {n:'المجموعة 4',d:'الدافعية والمشاركة',rg:'14–16',c:'var(--g6)',sit:'قسّمت المعلمة الطالبات مجموعات، فأنجزت طالبة واحدة المهمة وجلست البقية يتفرجن.',q:['أي المؤشرات غابت عن هذا العمل الجماعي؟','كيف نوزع أدوارًا محددة تضمن مشاركة كل طالبة؟','ما الفرق بين حماس حقيقي وحماس مصطنع ليوم الزيارة؟']},
+ {n:'المجموعة 5',d:'التقويم',rg:'17–19',c:'var(--g4)',sit:'سؤال في الختام أجابت عنه ثلاث متفوقات، فقالت المعلمة «ممتاز» وأنهت الحصة.',q:['ما المؤشرات التي فاتت المعلمة في هذا الختام؟','كيف تعرف المعلمة مستوى كل طالبة في 3 دقائق؟','صمّمن بطاقة خروج بمستويين، وعبارة تغذية راجعة توضح سبب الخطأ.']},
+ {n:'المجموعة 6',d:'سلوك الطالبات',rg:'20–25',c:'var(--g5)',sit:'صف هادئ تمامًا، لكن الطالبات لا يشاركن إلا إذا نودين بالاسم.',q:['هل هذا الهدوء انضباط؟ ماذا ستكتب الزائرة عنه؟','كيف تظهر استقلالية الطالبة وتقييمها الذاتي داخل الحصة؟','ما الممارسة اليومية التي تبني هذا السلوك قبل الزيارة بأسابيع؟']}
 ];
 const MYTHS=[
  ['الحصة المميزة تعرض أكبر عدد من الاستراتيجيات',0,'المعيار 7 يقيس وضوح ارتباط الأنشطة بنواتج التعلم، لا كثرتها.'],
@@ -150,9 +151,9 @@ station('s2',8.5,3,'2','المحطة 2 · 5–12 د · فكّري، زاوجي،
 station('s3',14.5,-3,'3','المحطة 3 · 12–17 د · بطاقة الملاحظة 1448هـ',`<h2>ماذا تقيس البطاقة فعلًا؟</h2>
  <div class="row">${[['20','بيئة التعلم','1–5'],['20','التدريس والتعلم','6–10'],['24','تنمية المهارات','11–16'],['12','التقويم','17–19'],['24','سلوك الطالبات','20–25']].map(d=>`<div class="tile"><b>${d[0]}</b><span>${d[1]}</span><small>المعايير ${d[2]}</small></div>`).join('')}</div>
  <div class="q rv" data-rv="claim">48 درجة من 100 تُقرأ من مهارات الطالبات وسلوكهن، لا من أداء المعلمة أمام الصف.</div>`);
-frame('grp',...onClock(20.5),1700,960,4,'box',`<div class="eb">خمس مجموعات · مجال لكل مجموعة · مسابقة نقاط طوال الورشة</div><div class="row" style="flex:1">${G.map(g=>`<div class="gcol" style="--gc:${g.c}"><span class="gn">${g.n}</span><h3 style="font-size:44px">${g.d}</h3><span class="dm">المعايير ${g.rg}</span><ul><li>${g.sit}</li></ul></div>`).join('')}</div>`);
+frame('grp',...onClock(20.5),1700,960,4,'box',`<div class="eb">ست مجموعات · مجال لكل مجموعة · مسابقة نقاط طوال الورشة</div><div class="row" style="flex:1">${G.map(g=>`<div class="gcol" style="--gc:${g.c}"><span class="gn">${g.n}</span><h3 style="font-size:44px">${g.d}</h3><span class="dm">المعايير ${g.rg}</span><ul><li>${g.sit}</li></ul></div>`).join('')}</div>`);
 const s4=station('s4',27,-4,'4','المحطة 4 · 17–32 د · مجموعات تعاونية',`<h2>موقف صفي لكل مجموعة</h2><div style="flex:1"></div><p class="tx" style="font-size:30px">الأدوار: ميسّرة · كاتبة · ضابطة وقت · متحدثة · مقيّمة &nbsp;|&nbsp; ورقة A3: 3 ممارسات · خطأ شائع · شاهد</p>`);
-G.forEach((g,i)=>child(s4,'c'+i,(2-i)*290,40,260,400,[-3,2,-1,3,-2][i],'card case',`<span class="gn">${g.n}</span><h3>${g.d}</h3><p class="sit">${g.sit}</p><ol>${g.q.map(x=>`<li>${x}</li>`).join('')}</ol>`).el=1);
+G.forEach((g,i)=>child(s4,'c'+i,(2.5-i)*244,70,228,440,[-3,2,-1,3,-2,2][i],'card case',`<span class="gn">${g.n}</span><h3>${g.d}</h3><p class="sit">${g.sit}</p><ol>${g.q.map(x=>`<li>${x}</li>`).join('')}</ol>`).el=1);
 const s5=station('s5',34,3,'5','المحطة 5 · 32–36 د · حلقة تنشيطية بالحركة',`<h2>حقيقة أم خرافة؟</h2><p class="tx" style="font-size:32px">حقيقة؟ قفي. خرافة؟ ابقي جالسة.</p>`,1);
 MYTHS.forEach((m,i)=>child(s5,'m'+i,(i%3-1)*-470,(Math.floor(i/3))*270+40,440,248,[-2,1,-1,2,-1,1][i],'card myth',`<span class="n">${i+1} / 6</span><p class="s">«${m[0]}»</p><span class="hint">حقيقة أم خرافة؟</span><div class="vd ${m[1]?'t':'f'} rv" data-rv="v${i}"><b>${m[1]?'حقيقة':'خرافة'}</b><span>${m[2]}</span></div>`));
 station('s6',42,-3,'6','المحطة 6 · 36–48 د · عرض ونقاش',`<h2>المقعد الساخن</h2>
